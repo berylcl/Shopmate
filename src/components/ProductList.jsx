@@ -1,28 +1,25 @@
-import {useEffect, useState} from "react";
-import {useFetch} from "../hooks/useFetch.js";
-import '../App.css'
+import { useEffect, useState } from "react";
+import { useFetch } from "../hooks/useFetch.js";
+import '../App.css';
+
 const ProductList = () => {
-    const [products, setProducts] = useState([])
-    const [url, setUrl] = useState('http://localhost:3000/products')
-    useFetch(url)
-    useEffect( () => {
-        const fetchProduct = async () => {
-            const response = await fetch(url)
-            const data = await response.json()
-            setProducts(data)
-        }
-        fetchProduct()
-    },[url])
+    const [url, setUrl] = useState('http://localhost:3000/products');
+    const { data: products, loading } = useFetch(url);
+
     return (
         <section>
             <h1>Product list</h1>
-            <button>{products.length}</button>
-            <button onClick={ () => setUrl('http://localhost:3000/products')}>All products</button>
-            <button onClick={ () => setUrl("http://localhost:3000/products?in_stock=true")}>In stock only</button>
-            <div className='card' key={products.id}>
-                {products.map((product) => {
-                    // eslint-disable-next-line react/jsx-key
-                    return (
+            <button>{products ? products.length : 0}</button>
+            <button onClick={() => setUrl('http://localhost:3000/products')}>
+                All products
+            </button>
+            <button onClick={() => setUrl("http://localhost:3000/products?in_stock=true")}>
+                In stock only
+            </button>
+            {loading && <p>I am loading</p>}
+            {products && (
+                <div className='card'>
+                    {products.map((product) => (
                         <p className='card' key={product.id}>
                             <p className='id'>{product.id}</p>
                             <p className='name'>{product.name}</p>
@@ -30,12 +27,16 @@ const ProductList = () => {
                             <div className="info">
                                 <span> ${product.price}</span>
                                 <br />
-                                <span className={product.in_stock? "instock":"unavailable"}>{product.in_stock? " In Stock": " Out of stock"}</span>
+                                <span className={product.in_stock ? "instock" : "unavailable"}>
+                  {product.in_stock ? " In Stock" : " Out of stock"}
+                </span>
                             </div>
-                        </p>)
-                })}
-            </div>
+                        </p>
+                    ))}
+                </div>
+            )}
         </section>
-    )
-}
-export default ProductList
+    );
+};
+
+export default ProductList;
