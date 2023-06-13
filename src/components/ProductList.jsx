@@ -1,21 +1,22 @@
 import {useEffect, useState} from "react";
+import {useFetch} from "../hooks/useFetch.js";
 import '../App.css'
 const ProductList = () => {
     const [products, setProducts] = useState([])
     const [url, setUrl] = useState('http://localhost:3000/products')
+    useFetch(url)
     useEffect( () => {
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                setProducts(data)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        const fetchProduct = async () => {
+            const response = await fetch(url)
+            const data = await response.json()
+            setProducts(data)
+        }
+        fetchProduct()
     },[url])
     return (
         <section>
             <h1>Product list</h1>
+            <button>{products.length}</button>
             <button onClick={ () => setUrl('http://localhost:3000/products')}>All products</button>
             <button onClick={ () => setUrl("http://localhost:3000/products?in_stock=true")}>In stock only</button>
             <div className='card' key={products.id}>

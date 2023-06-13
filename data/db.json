@@ -35,6 +35,31 @@
       "name": "Build a Blockchain from scratch in Vite + React",
       "price": 129,
       "in_stock": true
+    },
+    {
+      "id": 10007,
+      "name": "Introduction to Machine Learning",
+      "price": 79,
+      "in_stock": true
+    },
+    {
+      "id": 10008,
+      "name": "Python for Data Science",
+      "price": 69,
+      "in_stock": true
+    },
+    {
+      "id": 10009,
+      "name": "Web Design Principles",
+      "price": 29,
+      "in_stock": false
+    },
+    {
+      "id": 10010,
+      "name": "JavaScript Fundamentals",
+      "price": 59,
+      "in_stock": false
     }
   ]
 }
+
